@@ -1,27 +1,4 @@
-version: "3.8"
-
 services:
-
-  app-rm565824:
-
-    build: .
-
-    container_name: app-rm565824
-
-    restart: always
-
-    ports:
-      - "8080:8080"
-
-    environment:
-      USER_DB_ORACLE: system
-      PASSWORD_DB_ORACLE: Oracle123
-
-    depends_on:
-      - oracle-rm565824
-
-    networks:
-      - astro-network
 
   oracle-rm565824:
 
@@ -35,7 +12,7 @@ services:
       - "1522:1521"
 
     environment:
-      ORACLE_PASSWORD: Oracle123
+      ORACLE_PASSWORD: 120306
 
     volumes:
       - oracle_data:/opt/oracle/oradata
@@ -43,11 +20,30 @@ services:
     networks:
       - astro-network
 
-volumes:
+  app-rm565824:
 
+    build: .
+
+    container_name: app-rm565824
+
+    restart: always
+
+    depends_on:
+      - oracle-rm565824
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      USER_DB_ORACLE: system
+      PASSWORD_DB_ORACLE: 120306
+
+    networks:
+      - astro-network
+
+volumes:
   oracle_data:
 
 networks:
-
   astro-network:
     driver: bridge
